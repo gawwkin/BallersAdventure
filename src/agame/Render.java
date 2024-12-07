@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
@@ -31,8 +30,9 @@ public Camera camera;
 public Animation backFlip;
 public Thread RenderThread;
 public BufferedImage boog;
+public BufferedImage flager;
     
-    public Render(File world, File enemer) throws InterruptedException, IOException{
+    public Render(File world, File enemer, File flagger) throws InterruptedException, IOException{
         
          
         this.setSize(800, 600);
@@ -46,7 +46,7 @@ public BufferedImage boog;
        
       
        theWorld = new World();
-       theWorld.setFiles(world, enemer);
+       theWorld.setFiles(world, enemer, flagger);
        theWorld.calcLength();
        theWorld.load();
        
@@ -66,6 +66,8 @@ public BufferedImage boog;
             backFlip.setFrames(61);
             backFlip.setAnimation("src/Images/BackFlip/ball");
             boog = ImageIO.read(new File("src/Images/Boog.png"));
+            flager = ImageIO.read(new File("src/Images/Flag.png"));
+            
             
        } catch(IOException e){
            e.printStackTrace();
@@ -84,7 +86,7 @@ public BufferedImage boog;
                      
          
          // Drawing Background and player
-         if(baller != null && player.isAlive){
+         if(baller != null && player.isAlive && !theWorld.endFlag.isTouch){
              // Draw Background 
              g2.drawImage(background, 0, 0,this);
         
@@ -114,8 +116,6 @@ public BufferedImage boog;
                     if(theWorld.enemies[cnt].isActive){
                         theWorld.enemies[cnt].pathTrace();
                         g2.drawImage(boog,theWorld.enemies[cnt].ex, theWorld.enemies[cnt].ey,this);
-                        System.out.println("Enemy : " + cnt );
-                        System.out.println("Enemies tile : " + theWorld.enemies[cnt].findTile());
                         if(theWorld.enemies[cnt].isCollide(player)){
                             theWorld.enemies[cnt] = null;
                         }
@@ -129,11 +129,15 @@ public BufferedImage boog;
                  }
              }
              
+             // Draw The Flag 
+               g2.drawImage(flager,theWorld.endFlag.fx, theWorld.endFlag.fy,this);
+               System.out.println(theWorld.endFlag.isTouch);
+             
              
              
          
          }
-         else{
+         else if (!player.isAlive){
              
              g2.setFont(new Font(Font.DIALOG, Font.BOLD, 50));
              g2.setPaint(Color.RED);
@@ -141,6 +145,13 @@ public BufferedImage boog;
              
              
              
+         }
+         
+         else if(theWorld.endFlag.isTouch){
+             
+             g2.setFont(new Font(Font.DIALOG, Font.BOLD, 50));
+             g2.setPaint(Color.GREEN);
+             g2.drawString("YOU WON", 250, 300);
          }
          
           
@@ -157,7 +168,7 @@ public BufferedImage boog;
         dT = 0;
         time = 0.0038;
         // Render Loop ( Game Loop )
-        while(player.isAlive){
+        while(player.isAlive && !theWorld.endFlag.isTouch){
             
             pT = System.currentTimeMillis();
            //System.out.println("Render Loop Thread Is Running Waiting 1s");
@@ -181,6 +192,7 @@ public BufferedImage boog;
                      
                  // Check Collision
                         player.collision();
+                        theWorld.endFlag.isTouch(player);
                         
             
             

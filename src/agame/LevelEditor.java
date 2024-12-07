@@ -22,12 +22,14 @@ public class LevelEditor extends JPanel{
     public static BufferedImage grass;
     public static EditorCamera camera;
     public static BufferedImage boog;
+        public static BufferedImage flager;
     public static BufferedImage activeImage;
 
     
     public LevelEditor() throws IOException{
         grass = ImageIO.read(new File("src/Images/tile.png")); // load tile image
         boog = ImageIO.read(new File("src/Images/Boog.png")); // load boog image
+        flager = ImageIO.read(new File("src/Images/Flag.png")); // load Flag image
         
         
         world = new EditorWorld();
@@ -62,14 +64,18 @@ public class LevelEditor extends JPanel{
             
             // Drawing Tiles and Enemies 
             for(int cnt = 0; cnt< camera.totalTile; cnt++){
-                g2.drawImage(grass, camera.px[cnt], camera.py[cnt],Color.RED, this);
+                g2.drawImage(grass, camera.px[cnt], camera.py[cnt],null, this);
             }
        
   
            for(int cnt = 0; cnt< camera.totalEnemy; cnt++){
-                g2.drawImage(boog, camera.ex[cnt], camera.ey[cnt],Color.RED, this);
+                g2.drawImage(boog, camera.ex[cnt], camera.ey[cnt],null, this);
             }
 
+           
+           
+           if(activeImage == flager)
+                g2.drawImage(flager, camera.fx, camera.fy,Color.WHITE,this);
        
         
     }

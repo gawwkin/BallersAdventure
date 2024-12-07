@@ -40,6 +40,9 @@ public class Camera {
        
         
         
+        world.endFlag.fx -= player.ps;
+        
+        
     }
           
     

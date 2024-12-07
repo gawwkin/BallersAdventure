@@ -9,8 +9,8 @@ public class EditorCamera {
     public int totalTile, totalEnemy;
     public int dS;
     public int[] ex,ey;
-    
-    
+    public int fx,fy;
+    public short tF;
     
     public void setUp(int worldLength){
         totalTile = 0; totalEnemy =0;
@@ -19,7 +19,7 @@ public class EditorCamera {
         py = new int[worldLength];
         ex = new int[EditorWorld.maxEnemies];
         ey = new int[EditorWorld.maxEnemies];
-       
+        tF = 0;
         
         
     }
@@ -44,6 +44,14 @@ public class EditorCamera {
              world.ey[totalEnemy] = ly * 40;
             totalEnemy++;
         }
+        else if(LevelEditor.activeImage == LevelEditor.flager && tF <1){
+            fx = lx * 40;
+            fy = ly * 40;
+            world.fx = (lx * 40) + dS;
+            world.fy = fy;
+            tF++;
+    }
+        
         
     }
     

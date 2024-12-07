@@ -31,8 +31,9 @@ public static int mx, my;
 public JMenuBar bar;
 public JMenu menu;
 public JMenu enem;
+public JMenu Flag;
 public JMenu tile;
-public JMenuItem save, boog,grass;
+public JMenuItem save, boog,grass, theFlag;
     
     
     public EditorWindow() throws IOException{
@@ -40,11 +41,13 @@ public JMenuItem save, boog,grass;
         editor = new LevelEditor();
         bar = new JMenuBar();
         menu = new JMenu("Menu");
+         Flag = new JMenu("Flag");
         save = new JMenuItem("Save");
         enem = new JMenu("Enemy");
         tile = new JMenu("Tile");
         boog = new JMenuItem("Boog");
         grass = new JMenuItem("Grass");
+        theFlag = new JMenuItem("FLAG");
         
         
         
@@ -53,12 +56,15 @@ public JMenuItem save, boog,grass;
         bar.add(menu);
         bar.add(enem);
         bar.add(tile);
+        bar.add(Flag);
         tile.add(grass);
         enem.add(boog);
         menu.add(save);
+        Flag.add(theFlag);
         grass.addActionListener(this);
         save.addActionListener(this);
         boog.addActionListener(this);
+        theFlag.addActionListener(this);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(800, 600);
         this.setLocationRelativeTo(null);
@@ -195,6 +201,9 @@ public JMenuItem save, boog,grass;
         }
         else if (e.getSource() == this.grass){
            editor.activeImage = editor.grass;
+        }
+        else if (e.getSource() == this.theFlag){
+           editor.activeImage = editor.flager;
         }
     
         

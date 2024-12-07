@@ -237,10 +237,10 @@ public File world;
         }
         
         if(files[0].getName().equalsIgnoreCase("enemy.txt")){
-            game = new Render(files[1], files[0]);
+            game = new Render(files[2], files[0], files[1]);
         }
         else
-            game = new Render(files[0], files[1]);
+            game = new Render(files[0], files[1], files[2]);
         
        
         

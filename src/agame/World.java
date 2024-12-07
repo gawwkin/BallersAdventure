@@ -10,12 +10,16 @@ public class World {
     public static int worldLength, numEnemies;
     public String filePath;
     public Enemy[] enemies;
+    public Flag endFlag;
     public File world;
     public File Enemy;
+    public File theFlag;
    
-    public void setFiles(File world, File enemies){
+   
+    public void setFiles(File world, File enemies, File tFlag){
         this.world = world;
         this.Enemy = enemies;
+        this.theFlag = tFlag;
         
     }
     
@@ -86,7 +90,20 @@ public class World {
             cnt++;
             
         }
+        
+        
+        theFileSc.close();
+        theFileSc =  new Scanner(theFlag);
+        endFlag = new Flag();
+         
+            endFlag.fx = theFileSc.nextInt();
+            endFlag.fy = theFileSc.nextInt();
+    
+            theFileSc.close();
+            
+        }
+        
     }
     
     
-}
+

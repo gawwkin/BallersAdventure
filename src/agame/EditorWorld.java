@@ -11,7 +11,7 @@ public class EditorWorld {
     public int[] ex,ey;
     final public static int maxEnemies = 30;  // no more than 30 enemies are alloweed in a single level
     public int worldLength; //  ----> Measured in multipiles of 40 
-    
+    public int fx, fy;
     
     
     
@@ -60,6 +60,12 @@ public class EditorWorld {
         
         
         writer.close();
+        
+        
+         writer = new PrintWriter(folder.getAbsoluteFile().toString()+ "/" +"Flag.txt");  // write to flag file for the world
+         writer.println(fx);
+         writer.println(fy);
+         writer.close();
         
         
         
